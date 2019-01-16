@@ -17,10 +17,10 @@ exports.handler = function (event, context, callback) {
         bearer = response.body.access_token
 
             Swagger.http({
-            url: `https://api.apixplatform.com/facematch/1.0/v1/photo/verifyPair`,
+            url: `https://apac.faceid.hyperverge.co/v1/photo/verifyPair`,
             method: 'post',
             query: {},
-            headers: { "appId": "2d9288", "appKey": "506505f70970ce16988f", "X-Authorization": bearer},
+            headers: { "appId": "2d9288", "appKey": "506505f70970ce16988f"},
             body: `image1=${event.image1}&image2=${event.image2}&type=id`
         }).then((response) => {
             console.log(response)
