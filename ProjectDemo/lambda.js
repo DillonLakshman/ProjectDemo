@@ -9,7 +9,7 @@ exports.handler = function (event, context, callback) {
             "appid": "2d9288",
             "appkey": "506505f70970ce16988f",
         },
-        body: 'image1=vasu.jpg&image2=vasu.jpg&type=id'
+        body: ''
     }).then((response) => {
         console.log(response)
     }).catch((err) => {
