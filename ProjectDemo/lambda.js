@@ -19,5 +19,5 @@ exports.handler = function (event, context, callback) {
     });
 
 
-    callback(null, 'executed successfully');
+    callback(null, event.type);
 }
