@@ -3,42 +3,8 @@ let fs = require('fs');
 let request = require("request");
 
 
-exports.handler = function (event, context, callback) {
-
-    let image1 = event.image1;
-
-    let buff = new Buffer(image1, 'base64');
-    fs.writeFileSync('/tmp/image1.jpg', buff);
-
-    let image2 = event.image2;
-
-    let buff2 = new Buffer(image2, 'base64');
-    fs.writeFileSync('/tmp/image2.jpg', buff2);
-
-
-    var options = {
-        method: 'POST',
-        url: 'https://apac.faceid.hyperverge.co/v1/photo/verifyPair',
-        headers: { appkey: '506505f70970ce16988f', appid: '2d9288' },
-        formData: { image1: fs.readFile('/tmp/image1.jpg'), image2: fs.readFile('/tmp/image2.jpg'), type: 'id' }
-    };
-
-    request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-        console.log(body);
-    });
-
-    // Swagger.http({
-    //     url: `https://api.apixplatform.com/facematch/1.0/v1/photo/verifyPair`,
-    //     method: 'POST',
-    //     headers: { appkey: '506505f70970ce16988f', appid: '2d9288' },
-    //     formData: '{ image1: "asdasd", image2: "asdasdasd", type: "id" }'
-    // }).then((response) => {
-    //     console.log(response);
-    // }).catch((err) => {
-    //     // error handling goes here
-    // });
-
+exports.handler = function (event, context, callback) {   
+   
 
     if (event.method == "TOKEN") {
         Swagger.http({
@@ -53,6 +19,39 @@ exports.handler = function (event, context, callback) {
             console.log(err)
         });
 
+    }
+
+    if (event.method == "getBanks") {
+        Swagger.http({
+            url: `https://api.mufg-apifirst.xlabs.one/bankapi/bank?size=10&page=0`,
+            method: 'get',
+            headers: { "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImhzYmMtYXNwc3AtZWMifQ.eyJpc3MiOiJodHRwczovL2FwaS5tdWZnLWFwaWZpcnN0LnhsYWJzLm9uZS9hcy90b2tlbi5vYXV0aDIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImZpbnRlY2giLCJhdWQiOiIyNHMyZGIzN2hkcnYycXI1ZG5vdTNyamxlNiIsInN1YiI6InVXVWlXeFYzeWkiLCJqdGkiOiI1ODdmOGIxMTUyYjRhMmJmIiwiaWF0IjoxNTQ3NzA4NDIwLCJleHAiOjE1NDgwNjg0MjB9.1sncgDxcH1RpJUYiC3rLwlgapJ1HGxZp6Q166ZI6hAbbk3xErDyTHQiryfuTXwqxA3WS2FEs71r_rLUbDN7dXA", "Accept": "application/json" },
+        }).then((response) => {
+            callback(null, response.body);
+        }).catch((err) => {
+            console.log(err)
+        });
+
+    }
+
+    if (event.method == "createAccount") {
+        Swagger.http({
+            url: `https://api.mufg-apifirst.xlabs.one/accountapi/account`,
+            method: 'post',
+            query: {},
+            headers: { 
+                authorization: 'bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImhzYmMtYXNwc3AtZWMifQ.eyJpc3MiOiJodHRwczovL2FwaS5tdWZnLWFwaWZpcnN0LnhsYWJzLm9uZS9hcy90b2tlbi5vYXV0aDIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImZpbnRlY2giLCJhdWQiOiI0djVmaGlybnVoanZyc2hxb2dub252ZmRqIiwic3ViIjoieWdGWlhqVEdMQSIsImp0aSI6IjQ4YjRlZjYxYWRiN2M5YmYiLCJpYXQiOjE1NDc3MDg1NzIsImV4cCI6MTU0ODA2ODU3Mn0.5bINlfPvHIiRNpUTS-2TfENpNVBY6G2kAOn9PpbqCW9NLDBrkN0HBQef8NBjM0b0W8jVqjb4wttIk0ynZGJ5KA',
+                accept: 'application/json',
+                'content-type': 'application/json' 
+            },
+
+            body: JSON.stringify(event.account)
+        }).then((response) => {
+            console.log(Response.body)
+            callback(null, response.body);
+        }).catch((err) => {
+            console.log(err)
+        });
     }
 
 }
