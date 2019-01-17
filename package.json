@@ -2,6 +2,7 @@
   "name": "ProjectDemo",
   "version": "1.0.0",
   "dependencies": {
-    "swagger-client": "3.8.21"
+    "swagger-client": "3.8.21",
+    "fs": "0.0.1-security"
   }
 }
