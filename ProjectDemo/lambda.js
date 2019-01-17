@@ -16,17 +16,28 @@ exports.handler = function (event, context, callback) {
     fs.writeFileSync('/tmp/image2.jpg', buff2);
 
 
-    Swagger.http({
-        url: `https://apac.faceid.hyperverge.co/v1/photo/verifyPair`,
-        method: 'post',
-        query: {},
-        headers: { "appId": "2d9288", "appKey": "506505f70970ce16988f"},
-        body: `image1=%2Ftmp%2Fimage1.jpg&image2=%2Ftmp%2Fimage2.jpg&type=id`
-    }).then((response) => {
-        callback(null, response.body);
-    }).catch((err) => {
-        console.log(err);
+    var options = {
+        method: 'POST',
+        url: 'https://apac.faceid.hyperverge.co/v1/photo/verifyPair',
+        headers: { appkey: '506505f70970ce16988f', appid: '2d9288' },
+        formData: { image1: fs.readFile('/tmp/image1.jpg'), image2: fs.readFile('/tmp/image2.jpg'), type: 'id' }
+    };
+
+    request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+        console.log(body);
     });
+
+    // Swagger.http({
+    //     url: `https://api.apixplatform.com/facematch/1.0/v1/photo/verifyPair`,
+    //     method: 'POST',
+    //     headers: { appkey: '506505f70970ce16988f', appid: '2d9288' },
+    //     formData: '{ image1: "asdasd", image2: "asdasdasd", type: "id" }'
+    // }).then((response) => {
+    //     console.log(response);
+    // }).catch((err) => {
+    //     // error handling goes here
+    // });
 
 
     if (event.method == "TOKEN") {
