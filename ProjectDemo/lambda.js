@@ -15,6 +15,7 @@ exports.handler = function (event, context, callback) {
             body: '{"password":"1qaz2wsx@","userName":"rwijetilleke@virtusa.com"}'
         }).then((response) => {
             callback(null, response.body);
+            console.log("Token generated successfully");
         }).catch((err) => {
             console.log(err)
         });
@@ -28,6 +29,7 @@ exports.handler = function (event, context, callback) {
             headers: { "Authorization": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6ImhzYmMtYXNwc3AtZWMifQ.eyJpc3MiOiJodHRwczovL2FwaS5tdWZnLWFwaWZpcnN0LnhsYWJzLm9uZS9hcy90b2tlbi5vYXV0aDIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImZpbnRlY2giLCJhdWQiOiIyNHMyZGIzN2hkcnYycXI1ZG5vdTNyamxlNiIsInN1YiI6InVXVWlXeFYzeWkiLCJqdGkiOiI1ODdmOGIxMTUyYjRhMmJmIiwiaWF0IjoxNTQ3NzA4NDIwLCJleHAiOjE1NDgwNjg0MjB9.1sncgDxcH1RpJUYiC3rLwlgapJ1HGxZp6Q166ZI6hAbbk3xErDyTHQiryfuTXwqxA3WS2FEs71r_rLUbDN7dXA", "Accept": "application/json" },
         }).then((response) => {
             callback(null, response.body);
+            console.log("Bank information retrieved successfully");
         }).catch((err) => {
             console.log(err)
         });
@@ -49,6 +51,7 @@ exports.handler = function (event, context, callback) {
         }).then((response) => {
             console.log(Response.body)
             callback(null, response.body);
+            console.log("Account created successfully");
         }).catch((err) => {
             console.log(err)
         });
